@@ -19,15 +19,20 @@ bot.start((ctx) => {
 });
 
 bot.on("text", async (ctx) => {
+  var regex = /^[a-zA-Z]+$/;
+  if (!regex.test(ctx.message.text)) {
+    await ctx.replyWithMarkdown("only English Letter Supported");
+    return;
+  }
   const url = `https://unscramblex.com/anagram/${ctx.message.text}/?dictionary=nwl`;
   const wordsByLength = await scrapeWords(url);
 
-  if (wordsByLength) {
+  if (Object.keys(wordsByLength).length > 0) {
     const response = formatWordsByLength(wordsByLength);
     await ctx.replyWithMarkdown(response);
   } else {
     await ctx.replyWithMarkdown(
-      "*Failed to fetch the Words.*\nPlease try again."
+      "*Failed to fetch the Words.*\nPlease try again with new letters."
     );
   }
 });
@@ -54,13 +59,12 @@ async function scrapeWords(url) {
 
         wordsByLength[wordLength].push(word);
       });
-
       return wordsByLength;
     } else {
       return null;
     }
   } catch (error) {
-    console.error("An error occurred:", error);
+    console.error("An error occurred");
     return null;
   }
 }
