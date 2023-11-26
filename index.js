@@ -22,12 +22,10 @@ app.post(`/webhook/${botToken}`, (req, res) => {
   bot.handleUpdate(req.body);
   res.sendStatus(200);
 });
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
-
-bot.telegram.setWebhook(`${WEBHOOK_URL}/webhook/${botToken}`);
-bot.launch().then(console.log("Bot is running..."));
 
 bot.start((ctx) => {
   ctx.reply(
@@ -96,4 +94,5 @@ function formatWordsByLength(wordsByLength) {
   return response;
 }
 
-
+bot.telegram.setWebhook(`${WEBHOOK_URL}/webhook/${botToken}`);
+bot.launch().then(console.log("Bot is running..."));
