@@ -26,7 +26,7 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
 
-bot.telegram.setWebhook(`${WEBHOOK_URL}/webhook/${TELEGRAM_TOKEN}`);
+bot.telegram.setWebhook(`${WEBHOOK_URL}/webhook/${botToken}`);
 bot.launch().then(console.log("Bot is running..."));
 
 bot.start((ctx) => {
